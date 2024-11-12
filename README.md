@@ -1,6 +1,6 @@
 # PGR301 EKSAMEN 2024 Couch Explorers - Bærekraftig turisme fra sofakroken ! 
 
-# Kandidatnummer 32 besvarelse.
+# Kandidatnummer 32 besvarelse. test
 
 <img width="1181" alt="image" src="img/header.png">
 
