@@ -14,6 +14,7 @@ def handler(event, context):
     bucket_name = os.environ.get("S3_BUCKET_NAME")
     candidate_number = os.environ.get("CANDIDATE_NUMBER")
     
+    #This is a test to test my workflow!
     
     # Prompt json body.
     try:
