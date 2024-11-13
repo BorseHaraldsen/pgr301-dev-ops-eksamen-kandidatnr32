@@ -1,0 +1,79 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+Globals:
+  Function:
+    Timeout: 30
+
+Resources:
+  GenerateImageFunction:
+    Type: AWS::Serverless::Function
+    Auth:
+      Authorizer: NONE
+    Properties:
+      CodeUri: ../
+      Handler: generate_image.handler
+      Role: !GetAtt LambdaRole.Arn
+      Runtime: python3.8
+      Timeout: 300
+      MemorySize: 512
+      Environment:
+        Variables:
+          S3_BUCKET_NAME: "pgr301-couch-explorers"
+          CANDIDATE_NUMBER: "32"
+      Events:
+        GenerateImagePost:
+          Type: Api
+          Properties:
+            Path: /generate-image
+            Method: post
+            
+  LambdaRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      Policies:
+        - PolicyName: default
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action: 'logs:*'
+                Resource: '*'
+                
+        - PolicyName: s3
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 's3:PutObject'
+                  - 's3:GetObject'
+                Resource: arn:aws:s3:::pgr301-couch-explorers/*  # Adjust to the correct bucket ARN for your setup
+                
+        - PolicyName: invokeBedrock
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action: 'bedrock:InvokeModel'
+                Resource: '*'
+              
+Outputs:
+  GenerateImageApi:
+    Description: "API Gateway endpoint"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/generate-image/"
+  GenerateImageFunction:
+    Description: "GenerateImage Lambda Function ARN"
+    Value: !GetAtt GenerateImageFunction.Arn
+  GenerateImageFunctionIamRole:
+    Description: "Implicit IAM Role created for GenerateImage function"
+    Value: !GetAtt LambdaRole.Arn
