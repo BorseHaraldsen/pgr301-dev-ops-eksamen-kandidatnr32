@@ -14,8 +14,6 @@ def handler(event, context):
     bucket_name = os.environ.get("S3_BUCKET_NAME")
     candidate_number = os.environ.get("CANDIDATE_NUMBER")
     
-    Testing my protection rule doesn't compile so shouldn't push.
-    
     # Prompt json body.
     try:
         request_body = json.loads(event["body"])
@@ -52,7 +50,6 @@ def handler(event, context):
     # Upload the decoded image data to S3
     s3_client.put_object(Bucket=bucket_name, Key=s3_image_path, Body=image_data)
 
-    # 
     return {
         "statusCode": 200,
         "headers": {
