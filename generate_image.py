@@ -14,7 +14,7 @@ def handler(event, context):
     bucket_name = os.environ.get("S3_BUCKET_NAME")
     candidate_number = os.environ.get("CANDIDATE_NUMBER")
     
-    #This is a test to test my workflow!
+    #This is a test to test my workflow! now without s3_bucket in toml
     
     # Prompt json body.
     try:

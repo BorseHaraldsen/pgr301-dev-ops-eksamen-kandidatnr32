@@ -6,4 +6,4 @@ confirm_changeset = true
 capabilities = "CAPABILITY_IAM"
 disable_rollback = false
 image_repositories = []
-s3_bucket = "pgr301-couch-explorers"
+resolve_s3 = true
