@@ -4,6 +4,33 @@
 ### Linux ###
 *~
 
+# Ignore Terraform state files
+*.tfstate
+*.tfstate.backup
+
+# Ignore Terraform plan files
+*.tfplan
+
+# Ignore the Terraform provider cache
+.terraform/
+
+# Ignore crash logs
+crash.log
+
+# Ignore override files (used locally but not meant for version control)
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Ignore Terraform variable files (if sensitive data is included)
+*.tfvars
+*.tfvars.json
+
+# Ignore `.terraform.lock.hcl` if it’s generated locally and not shared
+.terraform.lock.hcl
+
+
 # temporary files which can be created if a process still has a handle open of a deleted file
 .fuse_hidden*
 
