@@ -1,0 +1,38 @@
+name: "Terraform Workflow Deploying SQS"
+
+on:
+  push:
+    branches:
+      - '**'
+      
+defaults:
+  run:
+    working-directory: ./infra
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: eu-west-1
+      CANDIDATE_NUMBER: "32"
+      SQS_QUEUE_NAME: "terraform-sqs-queue-32"
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+
+      - name: Terraform Init
+        run: terraform init
+        
+      - name: Terraform Plan (for other branches)
+        if: github.ref != 'refs/heads/main'
+        run: terraform plan -no-color
+        
+      - name: Terraform Apply (on main branch)
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: terraform apply -auto-approve
