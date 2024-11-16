@@ -69,6 +69,7 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+.DS_Store
 
 ### PyCharm ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and Webstorm
@@ -263,6 +264,8 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+.aws-sam
 
 # Build folder
 
