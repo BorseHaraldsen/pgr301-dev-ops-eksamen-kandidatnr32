@@ -1,0 +1,37 @@
+name: Docker Publish Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  push_to_dockerhub:
+    name: Push Docker image to Docker Hub
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v2
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push Docker image
+        run: |
+        
+          version="1.0.1" # Static version
+          commit_hash=$(git rev-parse --short HEAD)
+          
+          dynamic_tag="${version}-${commit_hash}"
+          
+          docker build . \
+            -t ${{ secrets.DOCKER_USERNAME }}/sqs_client_32:latest \
+            -t ${{ secrets.DOCKER_USERNAME }}/sqs_client_32:$dynamic_tag
+
+      - name: Push Docker images to Docker Hub
+        run: |
+          docker push ${{ secrets.DOCKER_USERNAME }}/sqs_client_32:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/sqs_client_32:$dynamic_tag
