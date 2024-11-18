@@ -21,7 +21,6 @@ jobs:
 
       - name: Build and push Docker image
         run: |
-        
           version="1.0.1" # Static version
           commit_hash=$(git rev-parse --short HEAD)
           echo "Commit hash is: $commit_hash"
