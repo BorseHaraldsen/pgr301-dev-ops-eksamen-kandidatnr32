@@ -26,11 +26,13 @@ jobs:
           echo "Commit hash is: $commit_hash"
           dynamic_tag="${version}-${commit_hash}"
           
+          echo "Building and tagging Docker image..."
           docker build ./java_sqs_client \
             -t ${{ secrets.DOCKER_USERNAME }}/sqs_client_32:latest \
             -t ${{ secrets.DOCKER_USERNAME }}/sqs_client_32:$dynamic_tag
 
       - name: Push Docker images to Docker Hub
         run: |
+          echo "Pushing Docker images..."
           docker push ${{ secrets.DOCKER_USERNAME }}/sqs_client_32:latest
           docker push ${{ secrets.DOCKER_USERNAME }}/sqs_client_32:$dynamic_tag
