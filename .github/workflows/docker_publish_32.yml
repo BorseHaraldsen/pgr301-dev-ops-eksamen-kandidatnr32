@@ -20,19 +20,22 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build and push Docker image
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         run: |
-          version="1.0.1" # Static version
-          commit_hash=$(git rev-parse --short HEAD)
-          echo "Commit hash is: $commit_hash"
-          dynamic_tag="${version}-${commit_hash}"
+          version="1.0.1"
+          rev=$(git rev-parse --short HEAD)
+          dynamic_tag="${version}-${rev}"
+          echo "Dynamic tag is: $dynamic_tag"
           
+
           echo "Building and tagging Docker image..."
           docker build ./java_sqs_client \
-            -t ${{ secrets.DOCKER_USERNAME }}/sqs_client_32:latest \
-            -t ${{ secrets.DOCKER_USERNAME }}/sqs_client_32:$dynamic_tag
+            -t ${DOCKER_USERNAME}/sqs_client_32:latest \
+            -t ${DOCKER_USERNAME}/sqs_client_32:${dynamic_tag}
 
       - name: Push Docker images to Docker Hub
         run: |
           echo "Pushing Docker images..."
-          docker push ${{ secrets.DOCKER_USERNAME }}/sqs_client_32:latest
-          docker push ${{ secrets.DOCKER_USERNAME }}/sqs_client_32:${dynamic_tag}
+          docker push ${DOCKER_USERNAME}/sqs_client_32:latest
+          docker push ${DOCKER_USERNAME}/sqs_client_32:${dynamic_tag}
