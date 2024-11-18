@@ -23,24 +23,21 @@ jobs:
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         run: |
-          version="1.0.1" # Static version
-          rev=$(git rev-parse --short HEAD) # Get the short commit hash
-          dynamic_tag="${version}-${rev}"  # Combine version and commit hash
+          version="1.0.2"
+          rev=$(git rev-parse --short HEAD)
+          dynamic_tag="${version}-${rev}"
           echo "Dynamic tag is: $dynamic_tag"
 
-          # Construct the full image references
           image_latest="${DOCKER_USERNAME}/sqs_client_32:latest"
           image_dynamic="${DOCKER_USERNAME}/sqs_client_32:${dynamic_tag}"
           echo "Latest image reference: $image_latest"
           echo "Dynamic image reference: $image_dynamic"
           
-          # Build Docker images
           echo "Building and tagging Docker images..."
           docker build ./java_sqs_client \
             -t "$image_latest" \
             -t "$image_dynamic"
 
-          # Push Docker images
           echo "Pushing Docker images..."
           docker push "$image_latest"
           docker push "$image_dynamic"
