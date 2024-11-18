@@ -24,7 +24,7 @@ jobs:
           version="1.0.1" # Static version
           commit_hash=$(git rev-parse --short HEAD)
           echo "Commit hash is: $commit_hash"
-          dynamic_tag="${version}_${commit_hash}_"
+          dynamic_tag="${version}-${commit_hash}"
           
           echo "Building and tagging Docker image..."
           docker build ./java_sqs_client \
@@ -35,4 +35,4 @@ jobs:
         run: |
           echo "Pushing Docker images..."
           docker push ${{ secrets.DOCKER_USERNAME }}/sqs_client_32:latest
-          docker push ${{ secrets.DOCKER_USERNAME }}/sqs_client_32:$dynamic_tag
+          docker push ${{ secrets.DOCKER_USERNAME }}/sqs_client_32:${dynamic_tag}
