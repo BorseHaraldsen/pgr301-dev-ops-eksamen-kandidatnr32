@@ -24,7 +24,7 @@ jobs:
           version="1.0.1" # Static version
           commit_hash=$(git rev-parse --short HEAD)
           echo "Commit hash is: $commit_hash"
-          dynamic_tag="${version}-${commit_hash}"
+          dynamic_tag="${version}_${commit_hash}_"
           
           echo "Building and tagging Docker image..."
           docker build ./java_sqs_client \
