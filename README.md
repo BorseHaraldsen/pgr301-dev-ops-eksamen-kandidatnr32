@@ -2,7 +2,7 @@
 
 # Kandidatnummer 32 besvarelse. test test 
 
-#Update readme to test workflow
+#Update readme to test workflow 2
 
 <img width="1181" alt="image" src="img/header.png">
 

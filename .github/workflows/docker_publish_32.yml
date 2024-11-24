@@ -23,7 +23,7 @@ jobs:
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         run: |
-          version="1.0.2"
+          version="1.0.3"
           rev=$(git rev-parse --short HEAD)
           dynamic_tag="${version}-${rev}"
           echo "Dynamic tag is: $dynamic_tag"
