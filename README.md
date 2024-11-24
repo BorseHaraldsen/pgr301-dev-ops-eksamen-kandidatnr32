@@ -2,6 +2,8 @@
 
 # Kandidatnummer 32 besvarelse. test test 
 
+#Update readme to test workflow
+
 <img width="1181" alt="image" src="img/header.png">
 
 Som nyansatt i Couch Explorers – en spennende startup som gir brukerne muligheten til å reise verden rundt fra komforten av egen sofa – er du med på å utvikle fremtidens reiseløsning! Ved hjelp av kunstig intelligens genererer tjenesten imponerende bilder av kjente landemerker og unike reisemål fra alle verdenshjørner. 
