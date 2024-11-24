@@ -11,11 +11,11 @@ Resources:
     Auth:
       Authorizer: NONE
     Properties:
-      CodeUri: ../
+      CodeUri: ./
       Handler: generate_image.handler
       Role: !GetAtt LambdaRole.Arn
       Runtime: python3.8
-      Timeout: 300
+      Timeout: 30
       MemorySize: 512
       Environment:
         Variables:
