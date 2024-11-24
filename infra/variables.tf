@@ -25,6 +25,7 @@ variable "sqs_queue_name" {
 variable "alarm_email" {
   description = "Email address for CloudWatch alarm notifications"
   type        = string
+  default     = "frha047@student.kristiania.no"
 }
 
 variable "alarm_threshold" {
