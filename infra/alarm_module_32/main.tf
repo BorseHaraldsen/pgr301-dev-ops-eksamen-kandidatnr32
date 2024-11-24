@@ -5,7 +5,7 @@ resource "aws_cloudwatch_metric_alarm" "threshold" {
   dimensions          = { QueueName = var.sqs_queue_name }
   comparison_operator = "GreaterThanThreshold"
   threshold           = var.threshold
-  evaluation_periods  = 2
+  evaluation_periods  = 1
   period              = 30
   statistic           = "Maximum"
   alarm_description   = "Triggers when ApproximateAgeOfOldestMessage exceeds ${var.threshold} seconds."
