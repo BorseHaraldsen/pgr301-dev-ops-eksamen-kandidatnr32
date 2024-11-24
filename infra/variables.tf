@@ -21,3 +21,14 @@ variable "sqs_queue_name" {
   type        = string
   default     = "terraform-sqs-queue-32"
 }
+
+variable "alarm_email" {
+  description = "Email address for CloudWatch alarm notifications"
+  type        = string
+}
+
+variable "alarm_threshold" {
+  description = "Threshold for ApproximateAgeOfOldestMessage in seconds"
+  default     = 30
+  type        = number
+}

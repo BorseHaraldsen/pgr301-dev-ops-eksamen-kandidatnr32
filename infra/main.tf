@@ -93,3 +93,11 @@ resource "aws_lambda_event_source_mapping" "sqs_lambda_mapping_32" {
   batch_size       = 5
   enabled          = true
 }
+
+module "sqs_alarm" {
+  source          = "./alarm_module_32"
+  prefix          = var.candidate_number
+  alarm_email     = var.alarm_email
+  sqs_queue_name  = var.sqs_queue_name
+  threshold       = var.alarm_threshold
+}
