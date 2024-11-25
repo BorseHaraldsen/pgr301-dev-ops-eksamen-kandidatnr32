@@ -116,7 +116,7 @@ Denne workflowen bruker en to-trinns taggestrategi for fleksibilitet og sporbarh
 ## **Kort introduksjon**:
 
 Implementasjonen av et system basert på serverless arkitektur med FaaS-tjenester som f.eks. AWS lambda og Amazon SQS, sammenlignet med en mikrotjenestearkitektur med container-teknologi har store virkninger på utfallet til systemet.
-De to tilnærmingene påvirker flere sentrale DevOps-prinsipper på forskjellige måter, men jeg skal drøfte implikasjonene i lys av disse spesifikke prinsippene: CI/CD (Kontinuerlig Integrasjon / Kontinuerlig leveranse), Overvåkning, Skalerbarhet og Kostnadskontroll, Eierskap og Ansvar.
+De to tilnærmingene påvirker flere sentrale DevOps-prinsipper på forskjellige måter, men jeg skal drøfte implikasjonene i lys av disse spesifikke prinsippene: CI/CD (Kontinuerlig Integrasjon / Kontinuerlig leveranse), Overvåkning, Skalerbarhet og Kostnadskontroll og Eierskap og Ansvar.
 
 ## **1.** **Automatisering og kontinuerlig levering (CI/CD)**:
 Automatisering og kontinuerlig levering er en sentral del av DevOps praksis. Serverless og mikrotjenestearkitektur påvirker hvordan automatisering og CI/CD-pipelines utformes og operer.
@@ -193,14 +193,14 @@ Valget bør baseres på prosjektets størrelse og krav til overvåkning, samt te
 Skalerbarhet og kostnadskontroll er avgjørende faktorer ved valg av arkitektur. Serverless og mikrotjenestearkitekturer har ulike egenskaper når det gjelder ressursutnyttelse, automatisering av skalering og økonomisk effektivitet.
 ### **Serverless-arkitektur**
 Serverless-arkitekturer er designet for automatisk skalering, hvor ressurser tildeles dynamisk basert på faktisk belastning.
-#### *Fordeler*:
+#### **Fordeler**:
 - **Automatisk skalering**: AWS Lambda og lignende tjenester skalerer automatisk opp og ned basert på trafikk. Dette gjør det mulig å håndtere plutselige økninger i bruk uten å konfigurere eller overvåke servere manuelt.
 - **Skalerbarhet**: Håndterer også automatisk tusenvis av samtidige forespørsler. Betyr at det er veldig skalerbart. 
 - **Redusert kompleksitet/administrasjon**: Ingen servervedlikehold, som igjen gjør at kostnad og ressurser blir lave dersom det skaleres høyt. 
 - **Ingen kostnad ved inaktivitet**: Funksjoner faktureres kun når de kjører (betaler kun for datakraften du bruker i millisekunder), noe som betyr at kostnadene skalerer med bruken.
 - **Ressurser**: Ressurser (CPU og minne) blir tildelt hver funksjon dynamisk, noe som eliminerer overprovisjonering.
 
-#### *Ulemper*:
+#### **Ulemper**:
 - **Cold Starts**: Det kan forekomme forsinkelse ved første oppstart til en funksjon. Dette fører til økt responstid, som kan være kritisk i visse applikasjoner, da særlig hvis det er skalert stort.
 - **Kjøretidsbegrensninger, ressursbegrensninger og stateless**: Maks 15 min per kjøring, må bruke ekstern lagring, minne opptil 10gb og begrenset diskplass, kan ha komplikasjoner ved skalering og/eller ressurskrevende applikasjoner.
 - **Kostnader ved kontinuerlig bruk**: For arbeidsmengder med konstant høy trafikk, kan potensielet kostnadene for serverless overstige kostnadene ved å drifte egne servere eller containere, da betalingen skjer per datakraft som brukes.
@@ -216,7 +216,7 @@ Containerbaserte Mikrotjenestearkitekturer, gir organisasjonen full kontroll ove
 - **Kostnader**: Ved jevn og høy arbeidsbelastning i store systemer kan drift av containere være billigere enn serverless, da det kan redusere kostnadene ved konstante hyppige forespørsler.
 
 #### **Ulemper**:
-- **Manuell skalering**: For å håndtere "spikes" i trafikken må man ofte ha ekstra ressurser aktive in case det trengs. Dette fører til ressurser og kostnader som står ubrukt i perioder med enten lav eller ingen belastning.
+- **Manuell skalering**: For å håndtere "spikes" i trafikken må man ofte ha ekstra ressurser aktive dersom de trengs. Dette fører til ressurser og kostnader som står ubrukt i perioder med enten lav eller ingen belastning.
 - **Kompleksitet**: Mikrotjenestearkitektur krever administrativt arbeid og manuelle skaleringsstrategier, noe som øker kompleksitet og vedlikeholdskostnader. 
 - **Fast kostnad**. Selv når containerbasert systemer ikke brukes må man ofte betale for drift av server 24/7, selv under inaktivitet. 
 
@@ -233,32 +233,32 @@ Mikrotjenester gir fordelen av å optimalisere ressursbruken ved å tildele nøy
 Eierskap og ansvar handler om hvordan teamet håndterer applikasjonens ytelse, pålitelighet og kostnader, og hvordan dette påvirkes av arkitekturvalget.
 ### **Serverless-arkitektur**
 I en serverless-arkitektur ligger mye av ansvaret for infrastruktur og vedlikehold hos skyleverandøren. Dette reduserer teamets eierskap til infrastrukturen, men gir fortsatt utviklerne ansvar for applikasjonens funksjonalitet.
-#### *Ytelse*:
+#### **Ytelse**:
 Skyleverandøren håndterer ressursallokering og automatisk skalering, noe som betyr at teamet ikke trenger å justere CPU eller minne manuelt.
 Begrenset kontroll over infrastrukturen kan føre til utfordringer i optimalisering av ytelsen, særlig med kaldstart-latens som er et unikt problem i serverless-systemer.
 Teamets ansvar: Optimalisere koden for rask respons og minimal kjøretid og monitorere ytelsen ved hjelp av leverandørens verktøy (f.eks. AWS CloudWatch) for å identifisere flaskehalser i funksjonene.
-#### *Pålitilighet*:
+#### **Pålitilighet**:
 Service Level Agreements (SLA-er) fra skyleverandøren sikrer høy oppetid, men teamet må fortsatt håndtere feil på applikasjonsnivå.
 Forenklet vedlikehold: Ingen behov for å administrere servere eller overvåke infrastruktur. Dette eliminerer risikoen for feilkonfigurasjoner av servere.
 Teamets ansvar: Designe robuste systemer som håndterer feil. Konfigurere retries og fallback-mekanismer for funksjoner og køer.
-#### *Kostnader*:
+#### **Kostnader**:
 Kostnader er knyttet til faktisk bruk (betal-per-forespørsel), noe som gjør dem dynamiske og potensielt uforutsigbare.
 Ueffektiv koding eller bruk av funksjoner, som for mange kaldstarter, kjøretid, eller overflødige kall, kan føre til unødvendige utgifter.
 Teamets ansvar: Analysere og optimalisere funksjoners kjøretid. Unngå unødvendige kall og overprovisjonering av ressurser.
 
 ### **Mikrotjenestearkitektur**
 I en mikrotjeneste-arkitektur ligger full kontroll over infrastrukturen og applikasjonens drift hos teamet. Dette gir større eierskap, men krever også mer ressurser og oppfølging.
-#### *Ytelse*:
+#### **Ytelse**:
 Teamet kan konfigurere tjenester for å oppnå spesifikke ytelsesmål, inkludert skalering og ressursbruk, uten å være begrenset av leverandørens standarder.
 Feil eller ineffektiv ressursbruk kan føre til dårlig ytelse og nedetid.
 Teamets ansvar: Administrere servere eller containere for å sikre at ressursene er riktig konfigurert og tilstrekkelige for å møte trafikkbehov. Overvåke og justere skalering for å oppnå optimal ytelse.
-#### *Pålitilighet*:
+#### **Pålitilighet**:
 Pålitelighet er helt avhengig av teamets design og implementering av redundans, vedlikehold og overvåkning.
 Mer "Head in the Game".
 Pålitiligheten avhenger av hvordan organisasjonen har utviklet systemet, og om det fungerer slik det skal. 
 Isolasjon: Feil i én tjeneste påvirker vanligvis ikke andre tjenester, gitt god design. Dette gir teamet bedre kontroll over applikasjonens pålitelighet.
 Teamets ansvar: Sørge for at tjenester er isolerte og designet for å håndtere feil uten å forårsake systemfeil. Implementere overvåkning og alarmer for tidlig oppdagelse av problemer.
-#### *Kostnader*:
+#### **Kostnader**:
 Kostnader er ofte faste, basert på driften av servere og containere, noe som gir bedre forutsigbarhet, men høyere grunnkostnader.
 Overprovisjonering eller ineffektiv ressursbruk kan føre til sløsing.
 Feil i infrastruktur eller konfigurasjon kan føre til nedetid og økonomiske tap. Dette kan også kreve økt bemanning for å håndtere feilretting.
@@ -269,8 +269,20 @@ Serverless reduserer teamets eierskap til infrastruktur og ytelse, men beholder 
 Dette kan være utfordrende i systemer med høye krav til ytelse og forutsigbare kostnader.
 Mikrotjenester gir større eierskap over hele systemet, men medfører mer ansvar for vedlikehold, ytelse, kostnader og feilhåndtering. Dette krever dedikerte ressurser og større teamkapasitet.
 
+## **Siste ord**
+Jeg tok et aktivt valg i å ikke aktivere branch protection rules, selv om vi har brukt dette igjennom semesteret. Dette er et bevisst valg for å holde løsningen enkel og fokusert på de kravene som er spesifisert. 
 
+Implementasjon av dette er gunstig for å sikre kvalitet og kontroll av kode som f.eks. merges til main. 
 
+Dersom dette var noe du ønsket, så ville jeg implementert dem som følger:
+**1. Krav om godkjenning av pull requests.**
+- Aktivere en regel som gjør at en godkjenning på pull requests er nødvendig før det merges til main.
+**2. Status check pass før merging.**
+- Dette kravet fører til at ingen kode som ikke kompilerer eller fungerer pushes til main.
+
+Dersom det hadde vært et større team ville jeg nok også aktivert noen ekstra innstillinger om nødvendig, slik som f.eks. disable force push og restrictions. 
+
+Tusen takk for gjennomgang av min besvarelse.
 
 
 ## **Sammendrag av Leveranser**
