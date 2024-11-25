@@ -32,11 +32,11 @@
 - IAM-roller for Lambda-SQS-integrasjon og bedrock.
 - Konfigurasjon av Terraform med S3-backend for state-filen.
 
-- **SQS-Kø URL**: 
-- `https://sqs.eu-west-1.amazonaws.com/244530008913/terraform-sqs-queue-32`
+    - **SQS-Kø URL**: 
+    - `https://sqs.eu-west-1.amazonaws.com/244530008913/terraform-sqs-queue-32`
 
 **Viktig**:
-  - Bruker fortsatt variabler for ting som kandidatnr, bucket name osv.
+- Bruker fortsatt variabler for ting som kandidatnr, bucket name osv.
 - Relevant kode ligger i mappen infra. (med bruk av lambda_sqs.py)
 - AWS provider versjonen er satt til OVER 1.9.0 og ikke inkluderende, slik som sagt i oppgaven.
 - Bilder lagres i `s3://pgr301-couch-explorers/32/task2_generated_images`.
