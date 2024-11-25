@@ -6,7 +6,8 @@
 
 ### A. AWS Lambda-funksjon med SAM og API Gateway
 - **Beskrivelse**: Lambda-funksjonen er implementert ved bruk av AWS SAM for å generere bilder via AWS Bedrock. Funksjonen eksponeres gjennom et POST-endepunkt via API Gateway.
-- **HTTP Endepunkt lenke til postman testing**: `https://dok2ppwzob.execute-api.eu-west-1.amazonaws.com/Prod/generate-image`
+- **HTTP Endepunkt lenke til postman testing**: 
+- `https://dok2ppwzob.execute-api.eu-west-1.amazonaws.com/Prod/generate-image`
 
 - **Viktig**:
   - S3-bucket-navnet og kandidatnummer hentes dynamisk fra miljøvariabler.
@@ -114,10 +115,10 @@ Denne workflowen bruker en to-trinns taggestrategi for fleksibilitet og sporbarh
 | Oppgave   | Leveranse                                              |
 |-----------|--------------------------------------------------------|
 | Oppgave 1 | API Gateway URL: `https://dok2ppwzob.execute-api.eu-west-1.amazonaws.com/Prod/generate-image` |
-|           | [GitHub Actions Workflow (SAM Deploy)](https://github.com/BorseHaraldsen/pgr301-dev-ops-eksamen-kandidatnr32/actions/runs/11992557403) GitHub Actions Workflow (SAM Deploy): `https://github.com/BorseHaraldsen/pgr301-dev-ops-eksamen-kandidatnr32/actions/runs/11992557403`|
+|           | [GitHub Actions Workflow (SAM Deploy)](https://github.com/BorseHaraldsen/pgr301-dev-ops-eksamen-kandidatnr32/actions/runs/11992557403) |
 | Oppgave 2 | SQS URL: `https://sqs.eu-west-1.amazonaws.com/244530008913/terraform-sqs-queue-32` |
-|           | [Terraform Apply Workflow](https://github.com/BorseHaraldsen/pgr301-dev-ops-eksamen-kandidatnr32/actions/runs/11992557400) Terraform Apply Workflow: `https://github.com/BorseHaraldsen/pgr301-dev-ops-eksamen-kandidatnr32/actions/runs/11992557400` |
-|           | [Terraform Plan Workflow](https://github.com/BorseHaraldsen/pgr301-dev-ops-eksamen-kandidatnr32/actions/runs/11992157664) Terraform Plan Workflow: `https://github.com/BorseHaraldsen/pgr301-dev-ops-eksamen-kandidatnr32/actions/runs/11992157664` |
+|           | [Terraform Apply Workflow](https://github.com/BorseHaraldsen/pgr301-dev-ops-eksamen-kandidatnr32/actions/runs/11992557400) |
+|           | [Terraform Plan Workflow](https://github.com/BorseHaraldsen/pgr301-dev-ops-eksamen-kandidatnr32/actions/runs/11992157664) |
 | Oppgave 3 | Container Image: `borseharaldsen/sqs_client_32`         |
 |           | SQS URL: `https://sqs.eu-west-1.amazonaws.com/244530008913/terraform-sqs-queue-32` |
 | Oppgave 4 | CloudWatch alarm konfigurert i `infra`.                |

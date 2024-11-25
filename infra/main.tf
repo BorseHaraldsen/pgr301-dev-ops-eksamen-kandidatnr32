@@ -8,7 +8,7 @@ data "archive_file" "lambda_zip" {
   source_file = "../lambda_sqs.py"
   output_path = "${path.module}/lambda_sqs.zip"
 }
-
+# Minor change added to test workflow
 resource "aws_lambda_function" "generate_image_lambda_32" {
   filename         = data.archive_file.lambda_zip.output_path
   function_name    = var.lambda_name

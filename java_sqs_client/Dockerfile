@@ -5,6 +5,7 @@ COPY pom.xml .
 COPY src ./src
 RUN mvn package
 
+# Minor change added to test workflow
 # Use a base image with Java 17
 FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
