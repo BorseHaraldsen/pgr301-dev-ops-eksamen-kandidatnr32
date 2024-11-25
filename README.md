@@ -1,6 +1,6 @@
 # PGR301 EKSAMEN 2024 Couch Explorers - Bærekraftig turisme fra sofakroken ! 
 
-# Kandidatnummer 32 besvarelse.
+## Kandidatnummer 32 besvarelse.
 ---
 ## Oppgave 1: AWS Lambda og GitHub Actions
 
@@ -116,15 +116,15 @@ Denne workflowen bruker en to-trinns taggestrategi for fleksibilitet og sporbarh
 Implementasjonen av et system basert på serverless arkitektur med FaaS-tjenester som f.eks. AWS lambda og Amazon SQS, sammenlignet med en mikrotjenestearkitektur med container-teknologi har store virkninger på utfallet til systemet.
 De to tilnærmingene påvirker flere sentrale DevOps-prinsipper på forskjellige måter, men jeg skal drøfte implikasjonene i lys av disse spesifikke prinsippene: CI/CD (Kontinuerlig Integrasjon / Kontinuerlig leveranse), Overvåkning, Skalerbarhet og Kostnadskontroll, Eierskap og Ansvar.
 
-1. **`Automatisering og kontinuerlig levering (CI/CD)`**:
+#### 1. **Automatisering og kontinuerlig levering (CI/CD)**:
 Automatisering og kontinuerlig levering er en sentral del av DevOps praksis. Serverless og mikrotjenestearkitektur påvirker hvordan automatisering og CI/CD-pipelines utformes og operer.
-- **Serverless-arkitektur** 
+#### **Serverless-arkitektur** 
 Serverless-arkitektur fremhever modularitet. Hver funksjon kan distribueres individuelt, noe som gir organisasjonen muligheten til å iterere raskt på spesifikke deler av applikasjonen uten å måtte distribuere hele systemet. Dette passer særlig godt i miljøer med hyppige endringer og/eller i små teams. 
 Slike oppdateringer kan distribueres gjennom en enkel CI/CD-pipeline.
 
-- *Fordeler*:
-- Forenklet distribusjon: Serverless-tjenester som AWS Lambda (Serverløs datatjeneste som kjører koden din som svar på hendelser / utløser) er designet for små, selvstendige funksjoner som kan distribueres individuelt. Dette reduserer kompleksiteten ved å oppdatere applikasjonen, ettersom endringer kan deployes uten å påvirke resten av systemet. Funksjonene lastes opp direkte, og infrastrukturen håndteres automatisk av leverandøren.
-- Raskere utrulling: Modulariteten til serverless-funksjoner gjør det mulig å implementere og rulle ut endringer raskt. Dette er særlig nyttig i agile utviklingsmiljøer, hvor små og hyppige oppdateringer er vanlige. Altså raske iterasjoner. CI/CD-pipelines kan raskt kjøre gjennom testing og utrulling for hver funksjon.
+#### *Fordeler*:
+- **Forenklet distribusjon**: Serverless-tjenester som AWS Lambda (Serverløs datatjeneste som kjører koden din som svar på hendelser / utløser) er designet for små, selvstendige funksjoner som kan distribueres individuelt. Dette reduserer kompleksiteten ved å oppdatere applikasjonen, ettersom endringer kan deployes uten å påvirke resten av systemet. Funksjonene lastes opp direkte, og infrastrukturen håndteres automatisk av leverandøren.
+- **Raskere utrulling**: Modulariteten til serverless-funksjoner gjør det mulig å implementere og rulle ut endringer raskt. Dette er særlig nyttig i agile utviklingsmiljøer, hvor små og hyppige oppdateringer er vanlige. Altså raske iterasjoner. CI/CD-pipelines kan raskt kjøre gjennom testing og utrulling for hver funksjon.
 - Kompleksitet: Kompleksiteten er lavere, da man kan kjøre backend-kode uten å måtte administrere infrastruktur. Dette frigjør også tid til utviklere og administrasjon. 
 - Distribusjonsstrategier: Serverless-arkitekturer har støtte for egne distribusjonsstrategier, slik som f.eks. "canary deployment". Dette kan automatisere prosessen enda mer, med lite ekstra arbeid eller konfigurasjon, noe som reduserer risiko for feil under deployment, med tanke på "skin in the game".
 - *Ulemper*:
