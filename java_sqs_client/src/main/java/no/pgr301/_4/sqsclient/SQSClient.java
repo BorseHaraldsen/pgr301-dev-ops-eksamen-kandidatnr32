@@ -26,7 +26,7 @@ public class SQSClient implements CommandLineRunner {
             System.exit(-1);
         }
         String messageBody = args[0];
-        //update for workflow
+
         Region region = Region.EU_WEST_1;
         String queueUrl = System.getenv("SQS_QUEUE_URL");
 

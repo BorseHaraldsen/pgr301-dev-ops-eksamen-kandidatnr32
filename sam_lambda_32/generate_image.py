@@ -50,7 +50,7 @@ def handler(event, context):
     # Upload the decoded image data to S3
     s3_client.put_object(Bucket=bucket_name, Key=s3_image_path, Body=image_data)
 
-    
+    # 
     return {
         "statusCode": 200,
         "headers": {
