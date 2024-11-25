@@ -111,39 +111,41 @@ Denne workflowen bruker en to-trinns taggestrategi for fleksibilitet og sporbarh
 
 ## Oppgave 5: Serverless, Function-as-a-Service (FaaS) vs Container-teknologi
 
-#### **Kort introduksjon**:
+### **Kort introduksjon**:
 
 Implementasjonen av et system basert på serverless arkitektur med FaaS-tjenester som f.eks. AWS lambda og Amazon SQS, sammenlignet med en mikrotjenestearkitektur med container-teknologi har store virkninger på utfallet til systemet.
 De to tilnærmingene påvirker flere sentrale DevOps-prinsipper på forskjellige måter, men jeg skal drøfte implikasjonene i lys av disse spesifikke prinsippene: CI/CD (Kontinuerlig Integrasjon / Kontinuerlig leveranse), Overvåkning, Skalerbarhet og Kostnadskontroll, Eierskap og Ansvar.
 
-#### 1. **Automatisering og kontinuerlig levering (CI/CD)**:
+### 1. **Automatisering og kontinuerlig levering (CI/CD)**:
 Automatisering og kontinuerlig levering er en sentral del av DevOps praksis. Serverless og mikrotjenestearkitektur påvirker hvordan automatisering og CI/CD-pipelines utformes og operer.
-#### **Serverless-arkitektur** 
+### **Serverless-arkitektur** 
 Serverless-arkitektur fremhever modularitet. Hver funksjon kan distribueres individuelt, noe som gir organisasjonen muligheten til å iterere raskt på spesifikke deler av applikasjonen uten å måtte distribuere hele systemet. Dette passer særlig godt i miljøer med hyppige endringer og/eller i små teams. 
 Slike oppdateringer kan distribueres gjennom en enkel CI/CD-pipeline.
 
-#### *Fordeler*:
+#### **Fordeler**:
 - **Forenklet distribusjon**: Serverless-tjenester som AWS Lambda (Serverløs datatjeneste som kjører koden din som svar på hendelser / utløser) er designet for små, selvstendige funksjoner som kan distribueres individuelt. Dette reduserer kompleksiteten ved å oppdatere applikasjonen, ettersom endringer kan deployes uten å påvirke resten av systemet. Funksjonene lastes opp direkte, og infrastrukturen håndteres automatisk av leverandøren.
 - **Raskere utrulling**: Modulariteten til serverless-funksjoner gjør det mulig å implementere og rulle ut endringer raskt. Dette er særlig nyttig i agile utviklingsmiljøer, hvor små og hyppige oppdateringer er vanlige. Altså raske iterasjoner. CI/CD-pipelines kan raskt kjøre gjennom testing og utrulling for hver funksjon.
-- Kompleksitet: Kompleksiteten er lavere, da man kan kjøre backend-kode uten å måtte administrere infrastruktur. Dette frigjør også tid til utviklere og administrasjon. 
-- Distribusjonsstrategier: Serverless-arkitekturer har støtte for egne distribusjonsstrategier, slik som f.eks. "canary deployment". Dette kan automatisere prosessen enda mer, med lite ekstra arbeid eller konfigurasjon, noe som reduserer risiko for feil under deployment, med tanke på "skin in the game".
-- *Ulemper*:
-- Oversikt: Når et system består av mange små funksjoner, kan det bli vanskelig å holde oversikt og administrere CI/CD pipelines effektivt. 
-- Feilhåndtering: Feilhåndtering kan kreve mer innsats for å unngå store problemer. Feil i en funksjon kan ha innvirkning på andre funksjoner i systemet. Selv om de deployes individuelt, kan funksjonalitet slutte å fungere dersom koordineringen som er nødvendig mellom 2 eller flere funksjoner er feil. F.eks. feil i lambda funksjon kan ha innvirkning på produksjon av meldinger i en SQS-kø. 
-- Mangel på standardisering: Ulike serverless-leverandører har forskjellige verktøy og prosesser, noe som kan gjøre det vanskelig å standardisere pipelines på tvers av miljøer. For eksempel kan overgangen fra AWS Lambda til en annen plattform kreve en betydelig omskriving av pipelines.
-- Avhengighet av tredjepart: Fordi serverless-arkitekturen er sterkt knyttet til en spesifikk skyleverandør, blir CI/CD-prosessen også avhengig av leverandørens funksjoner og begrensninger. Dette kan gjøre det vanskeligere å implementere tilpasninger som passer prosjektets spesifikke behov. F.eks. kjøretidsbegrensninger (maks 15 minutter per kjøring) og ressursbegrensninger (minne opp til 10GB, begrenset diskplass).
+- **Kompleksitet**: Kompleksiteten er lavere, da man kan kjøre backend-kode uten å måtte administrere infrastruktur. Dette frigjør også tid til utviklere og administrasjon. 
+- **Distribusjonsstrategier**: Serverless-arkitekturer har støtte for egne distribusjonsstrategier, slik som f.eks. "canary deployment". Dette kan automatisere prosessen enda mer, med lite ekstra arbeid eller konfigurasjon, noe som reduserer risiko for feil under deployment, med tanke på "skin in the game".
 
-- **Mikrotjenestearkitektur** 
+#### **Ulemper**:
+- **Oversikt**: Når et system består av mange små funksjoner, kan det bli vanskelig å holde oversikt og administrere CI/CD pipelines effektivt. 
+- **Feilhåndtering**: Feilhåndtering kan kreve mer innsats for å unngå store problemer. Feil i en funksjon kan ha innvirkning på andre funksjoner i systemet. Selv om de deployes individuelt, kan funksjonalitet slutte å fungere dersom koordineringen som er nødvendig mellom 2 eller flere funksjoner er feil. F.eks. feil i lambda funksjon kan ha innvirkning på produksjon av meldinger i en SQS-kø. 
+- **Mangel på standardisering**: Ulike serverless-leverandører har forskjellige verktøy og prosesser, noe som kan gjøre det vanskelig å standardisere pipelines på tvers av miljøer. For eksempel kan overgangen fra AWS Lambda til en annen plattform kreve en betydelig omskriving av pipelines.
+- **Avhengighet av tredjepart**: Fordi serverless-arkitekturen er sterkt knyttet til en spesifikk skyleverandør, blir CI/CD-prosessen også avhengig av leverandørens funksjoner og begrensninger. Dette kan gjøre det vanskeligere å implementere tilpasninger som passer prosjektets spesifikke behov. F.eks. kjøretidsbegrensninger (maks 15 minutter per kjøring) og ressursbegrensninger (minne opp til 10GB, begrenset diskplass).
+
+### **Mikrotjenestearkitektur** 
 Mikrotjenestearkitekturen bryter applikasjoner ned i mindre, selvstendige tjenester som kan utvikles, distribueres og skaleres uavhengig. Disse tjenestene er vanligvis pakket som containere og håndteres gjennom CI/CD-pipelines.
-- *Fordeler*:
-- Produktivitet: Mikrotjenester er designet for å være uavhengige enheter som kan distribueres separat. Dette gir teamene mulighet til å jobbe parallelt på forskjellige tjenester, noe som øker produktiviteten i større team.
-- Konsistens/portabilitet: Docker containere kjører identisk på ulike miljøer, uavhengig av operativsystem eller andre avhengigheter. Man kan også etablere standarder i containere, som gir bedre kontroll over distribusjonsprosessen og portabiliteten på tvers av miljøer.
-- Feilhåndtering: Feil i én mikrotjeneste påvirker ikke nødvendigvis resten av systemet. Dette reduserer risikoen for at en enkelt feil sprer seg til hele applikasjonen.
-- Frihet: Man er ikke låst til serverless-leverandører, som skaper mer frihet generelt, i teknologi og andre ting. Mer kontroll og fleksibilitet.
-- *Ulemper*:
-- Kompleksitet: CI/CD-pipelines må settes opp for hver tjeneste, noe som kan føre til administrativ overbelastning, spesielt i større systemer. 
-- Administrivt arbeid: Man må administrere infrastruktur, slik som f.eks. sikkerhet og andre ting, noe som kan ha påvirkning på automatisering og CI/CD. 
-- Iterasjonshastighet: Mer omfattende oppsett og arbeid, generelt tregere iterasjoner. 
+#### **Fordeler**:
+- **Produktivitet**: Mikrotjenester er designet for å være uavhengige enheter som kan distribueres separat. Dette gir teamene mulighet til å jobbe parallelt på forskjellige tjenester, noe som øker produktiviteten i større team.
+- **Konsistens/portabilitet**: Docker containere kjører identisk på ulike miljøer, uavhengig av operativsystem eller andre avhengigheter. Man kan også etablere standarder i containere, som gir bedre kontroll over distribusjonsprosessen og portabiliteten på tvers av miljøer.
+- **Feilhåndtering**: Feil i én mikrotjeneste påvirker ikke nødvendigvis resten av systemet. Dette reduserer risikoen for at en enkelt feil sprer seg til hele applikasjonen.
+- **Frihet**: Man er ikke låst til serverless-leverandører, som skaper mer frihet generelt, i teknologi og andre ting. Mer kontroll og fleksibilitet.
+
+#### *Ulemper*:
+- **Kompleksitet**: CI/CD-pipelines må settes opp for hver tjeneste, noe som kan føre til administrativ overbelastning, spesielt i større systemer. 
+- **Administrivt arbeid**: Man må administrere infrastruktur, slik som f.eks. sikkerhet og andre ting, noe som kan ha påvirkning på automatisering og CI/CD. 
+- **Iterasjonshastighet**: Mer omfattende oppsett og arbeid, generelt tregere iterasjoner. 
 
 **Sammenligning og konklusjon**
 
