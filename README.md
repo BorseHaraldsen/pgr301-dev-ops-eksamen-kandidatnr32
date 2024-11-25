@@ -5,52 +5,54 @@
 ## Oppgave 1: AWS Lambda og GitHub Actions
 
 ### A. AWS Lambda-funksjon med SAM og API Gateway
-- **Beskrivelse**: Lambda-funksjonen er implementert ved bruk av AWS SAM for å generere bilder via AWS Bedrock. Funksjonen eksponeres gjennom et POST-endepunkt via API Gateway.
+**Beskrivelse**: Lambda-funksjonen er implementert ved bruk av AWS SAM for å generere bilder via AWS Bedrock. Funksjonen eksponeres gjennom et POST-endepunkt via API Gateway.
 - **HTTP Endepunkt lenke til postman testing**: 
 - `https://dok2ppwzob.execute-api.eu-west-1.amazonaws.com/Prod/generate-image`
 
-- **Viktig**:
-  - S3-bucket-navnet og kandidatnummer hentes dynamisk fra miljøvariabler.
-  - Relevant kode ligger i mappen `sam_lambda_32`.
-  - Bilder lagres i `s3://pgr301-couch-explorers/32/generated_images`.
+**Viktig**:
+- S3-bucket-navnet og kandidatnummer hentes dynamisk fra miljøvariabler.
+- Relevant kode ligger i mappen `sam_lambda_32`.
+- Bilder lagres i `s3://pgr301-couch-explorers/32/generated_images`.
 
 ### B. GitHub Actions Workflow for SAM-deploy
-- **Beskrivelse**: Automatisert workflow som deployer SAM-applikasjonen hver gang det pushes til `main`-branchen.
-- **Lenke til kjørt Github Actions Workflow**: [GitHub Actions Workflow](https://github.com/BorseHaraldsen/pgr301-dev-ops-eksamen-kandidatnr32/actions/runs/11992557403)
+**Beskrivelse**: Automatisert workflow som deployer SAM-applikasjonen hver gang det pushes til `main`-branchen.
+- **Lenke til kjørt Github Actions Workflow**: 
+- [GitHub Actions Workflow](https://github.com/BorseHaraldsen/pgr301-dev-ops-eksamen-kandidatnr32/actions/runs/11992557403)
 
-- **Viktig**:
-  - Relevant kode ligger i .github/workflows/deploy_lambda_32.yml
+**Viktig**:
+- Relevant kode ligger i .github/workflows/deploy_lambda_32.yml
 
 ---
 
 ## Oppgave 2: Infrastruktur med Terraform og SQS
 
 ### A. Infrastruktur som kode
-- **Beskrivelse**: Terraform er brukt til å opprette en SQS-kø og integrere denne med Lambda for asynkron behandling. Implementasjonen inkluderer:
-  - Opprettelse av SQS-kø.
-  - IAM-roller for Lambda-SQS-integrasjon og bedrock.
-  - Konfigurasjon av Terraform med S3-backend for state-filen.
+**Beskrivelse**: Terraform er brukt til å opprette en SQS-kø og integrere denne med Lambda for asynkron behandling. Implementasjonen inkluderer:
+- Opprettelse av SQS-kø.
+- IAM-roller for Lambda-SQS-integrasjon og bedrock.
+- Konfigurasjon av Terraform med S3-backend for state-filen.
 
-- **SQS-Kø URL**: `https://sqs.eu-west-1.amazonaws.com/244530008913/terraform-sqs-queue-32`
+- **SQS-Kø URL**: 
+- `https://sqs.eu-west-1.amazonaws.com/244530008913/terraform-sqs-queue-32`
 
-- **Viktig**:
+**Viktig**:
   - Bruker fortsatt variabler for ting som kandidatnr, bucket name osv.
-  - Relevant kode ligger i mappen infra. (med bruk av lambda_sqs.py)
-  - AWS provider versjonen er satt til OVER 1.9.0 og ikke inkluderende, slik som sagt i oppgaven.
-  - Bilder lagres i `s3://pgr301-couch-explorers/32/task2_generated_images`.
-  - Eksempel test: aws sqs send-message --queue-url https://sqs.eu-west-1.amazonaws.com/244530008913/terraform-sqs-queue-32 --message-body "Beautiful house on top of an ocean wave"
+- Relevant kode ligger i mappen infra. (med bruk av lambda_sqs.py)
+- AWS provider versjonen er satt til OVER 1.9.0 og ikke inkluderende, slik som sagt i oppgaven.
+- Bilder lagres i `s3://pgr301-couch-explorers/32/task2_generated_images`.
+- Eksempel test: aws sqs send-message --queue-url https://sqs.eu-west-1.amazonaws.com/244530008913/terraform-sqs-queue-32 --message-body "Beautiful house on top of an ocean wave"
 
 ### B. GitHub Actions Workflow for Terraform
-- **Beskrivelse**: Workflow for å deploye infrastrukturen med Terraform, med forskjellig oppførsel avhengig av hvilken branch som oppdateres:
-  - `main`-branch: Kjør `terraform apply` for å oppdatere infrastrukturen.
-  - Andre branches: Kjør `terraform plan` for gjennomgang av endringer.
+**Beskrivelse**: Workflow for å deploye infrastrukturen med Terraform, med forskjellig oppførsel avhengig av hvilken branch som oppdateres:
+`main`-branch: Kjør `terraform apply` for å oppdatere infrastrukturen.
+Andre branches: Kjør `terraform plan` for gjennomgang av endringer.
 
 - **Lenker til kjørte Github Actions Workflows**:
   - [Terraform Apply Workflow (main)](https://github.com/BorseHaraldsen/pgr301-dev-ops-eksamen-kandidatnr32/actions/runs/11992557400)
   - [Terraform Plan Workflow (task2_branch_32)](https://github.com/BorseHaraldsen/pgr301-dev-ops-eksamen-kandidatnr32/actions/runs/11992157664)
 
-- **Viktig**:
-  - Relevant kode ligger i .github/workflows/deploy_terraform_32.yml
+**Viktig**:
+- Relevant kode ligger i .github/workflows/deploy_terraform_32.yml
   
 ---
 
