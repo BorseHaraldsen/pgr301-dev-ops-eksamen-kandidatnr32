@@ -275,8 +275,10 @@ Jeg tok et aktivt valg i å ikke aktivere branch protection rules, selv om vi ha
 Implementasjon av dette er gunstig for å sikre kvalitet og kontroll av kode som f.eks. merges til main. 
 
 Dersom dette var noe du ønsket, så ville jeg implementert dem som følger:
+
 **1. Krav om godkjenning av pull requests.**
 - Aktivere en regel som gjør at en godkjenning på pull requests er nødvendig før det merges til main.
+- 
 **2. Status check pass før merging.**
 - Dette kravet fører til at ingen kode som ikke kompilerer eller fungerer pushes til main.
 
