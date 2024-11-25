@@ -142,12 +142,12 @@ Mikrotjenestearkitekturen bryter applikasjoner ned i mindre, selvstendige tjenes
 - **Feilhåndtering**: Feil i én mikrotjeneste påvirker ikke nødvendigvis resten av systemet. Dette reduserer risikoen for at en enkelt feil sprer seg til hele applikasjonen.
 - **Frihet**: Man er ikke låst til serverless-leverandører, som skaper mer frihet generelt, i teknologi og andre ting. Mer kontroll og fleksibilitet.
 
-#### *Ulemper*:
+#### **Ulemper**:
 - **Kompleksitet**: CI/CD-pipelines må settes opp for hver tjeneste, noe som kan føre til administrativ overbelastning, spesielt i større systemer. 
 - **Administrivt arbeid**: Man må administrere infrastruktur, slik som f.eks. sikkerhet og andre ting, noe som kan ha påvirkning på automatisering og CI/CD. 
 - **Iterasjonshastighet**: Mer omfattende oppsett og arbeid, generelt tregere iterasjoner. 
 
-**Sammenligning og konklusjon**
+### **Sammenligning og konklusjon**
 
 Begge arkitekturer har unike styrker og svakheter når det gjelder automatisering og CI/CD.
 Serverless kan være spesielt egnet for hendelsesdrevne, kostnadssensitive applikasjoner med uforutsigbare arbeidsmengder, som for eksempel IoT- eller mobilapplikasjonsbackends. Eller i vårt tilfelle image generating.
@@ -155,63 +155,69 @@ Mikrotjenester derimot, utmerker seg i storskala systemer som krever avansert ko
 Valget mellom de to bør baseres på prosjektets størrelse, teamets behov og ønsket balanse mellom modularitet, kompleksitet og kontroll.
 Uansett valg, må DevOps-prinsipper for automatisering og CI/CD tilpasses for å møte utfordringene i den valgte arkitekturen.
 
-2. **`Observability (overvåkning)`**:
+### 2. **Observability (overvåkning)**:
 Overvåkning er en viktig del av DevOps-praksis, da det gir innsikt i systemets helse, ytelse og feilhåndtering. Forskjellen mellom container-basert mikrotjenestearkitektur og serverless-arkitektur har betydelige implikasjoner for hvordan observability håndteres.
-- **Serverless-arkitektur**
+### **Serverless-arkitektur**
 Serverless-arkitektur er sterkt avhengig av skyleverandørens innebygde verktøy for overvåkning og logging.
-- *Fordeler*:
-- Innebygde overvåkingsverktøy: Serverless-plattformer som AWS Lambda har integrerte overvåkings- og loggingsfunksjoner gjennom tjenester som AWS CloudWatch og X-ray. Dette gjør det enkelt å samle metrikker, feilmeldinger og sporingsdata uten ekstra oppsett.
-- Skalerbar overvåkning: Fordi serverless-arkitekturen skalerer automatisk, kan overvåkningen tilpasses denne skalerbarheten uten behov for manuell konfigurering.
-- Mindre kompleksitet: Ved at infrastrukturen håndteres av leverandøren, reduseres kompleksiteten for utviklingsteamet. Behøver ikke overvåke fysiske servere, containere eller andre ting. 
-- *Ulemper*:
-Fragmentert logging: Hver funksjon genererer egne logger, noe som kan gjøre det utfordrene å følge en hel prosess som går gjennom flere funksjoner.
-Mangel på tilpasning: Innebygde overvåkingsverktøy er begrenset til det leverandøren tilbyr. Hvis spesialtilpassede metrikker eller avanserte feilsøkingsmuligheter trengs, som ikke finnes hos leverandøren, kan det være vanskelig å implementere.
-Asynkrone problemer: Feil som oppstår i asynkrone systemer (for eksempel når meldinger ligger i kø i SQS) kan være vanskelig å spore og feilsøke. Dette gjør debugging mer komplekst sammenlignet med synkrone mikrotjenester.
-- **Mikrotjenestearkitektur**
-- *Fordeler*:
-- Fleksibilitet: Med mikrotjenester kan teamet fritt velge selv hvilket overvåkningsverktøy de ønsker, basert på behov. Dette kan gi full kontroll på hvordan man samler metrikker, visualiserer dem og analyserer. 
-- Sentralisert logging: Man kan sentralisere loggingen sin for enkel sporing av prosesser.
-- Alarmer: Man kan sette opp alarmer slik som med serverless-platformer, men man er ikke låst til det leverandøren tilbyr, som betyr at man kan ha hyperspesifikke alarmer.
-- *Ulemper*:
-- Kompleksitet: Oppsett av logging, og overvåking, er veldig mye mer krevende enn å bruke innebygde overvåkningsverktøy. Oppsettet krever mye tid og ressurser, særlig hvis tjeneste skalerer. 
-- Støy: Hvis oppsettet ikke er optimalt, kan det være vanskelig å finne relevante logger eller metrics i store mengder data. 
+#### **Fordeler**:
+- **Innebygde overvåkingsverktøy**: Serverless-plattformer som AWS Lambda har integrerte overvåkings- og loggingsfunksjoner gjennom tjenester som AWS CloudWatch og X-ray. Dette gjør det enkelt å samle metrikker, feilmeldinger og sporingsdata uten ekstra oppsett.
+- **Skalerbar overvåkning**: Fordi serverless-arkitekturen skalerer automatisk, kan overvåkningen tilpasses denne skalerbarheten uten behov for manuell konfigurering.
+- **Mindre kompleksitet**: Ved at infrastrukturen håndteres av leverandøren, reduseres kompleksiteten for utviklingsteamet. Behøver ikke overvåke fysiske servere, containere eller andre ting. 
 
-**Sammenligning og konklusjon**
-Serverless-arkitektur gir enkelhet og skalerbarhet, men på bekostning av fleksibilitet. Innebygde verktøy som CloudWatch gjør det raskt og enkelt å sette opp overvåkning, men utfordringer som fragmenterte logger og begrenset tilpasning kan redusere effektiviteten i komplekse systemer. 
+#### **Ulemper**:
+- **Fragmentert logging**: Hver funksjon genererer egne logger, noe som kan gjøre det utfordrene å følge en hel prosess som går gjennom flere funksjoner.
+- **Mangel på tilpasning**: Innebygde overvåkingsverktøy er begrenset til det leverandøren tilbyr. Hvis spesialtilpassede metrikker eller avanserte feilsøkingsmuligheter trengs, som ikke finnes hos leverandøren, kan det være vanskelig å implementere.
+- **Asynkrone problemer**: Feil som oppstår i asynkrone systemer (for eksempel når meldinger ligger i kø i SQS) kan være vanskelig å spore og feilsøke. Dette gjør debugging mer komplekst sammenlignet med synkrone mikrotjenester.
+
+### **Mikrotjenestearkitektur**
+#### **Fordeler**:
+- **Fleksibilitet**: Med mikrotjenester kan teamet fritt velge selv hvilket overvåkningsverktøy de ønsker, basert på behov. Dette kan gi full kontroll på hvordan man samler metrikker, visualiserer dem og analyserer. 
+- **Sentralisert logging**: Man kan sentralisere loggingen sin for enkel sporing av prosesser.
+- **Alarmer**: Man kan sette opp alarmer slik som med serverless-platformer, men man er ikke låst til det leverandøren tilbyr, som betyr at man kan ha hyperspesifikke alarmer.
+
+#### **Ulemper**:
+- **Kompleksitet**: Oppsett av logging, og overvåking, er veldig mye mer krevende enn å bruke innebygde overvåkningsverktøy. Oppsettet krever mye tid og ressurser, særlig hvis tjeneste skalerer. 
+- **Støy**: Hvis oppsettet ikke er optimalt, kan det være vanskelig å finne relevante logger eller metrics i store mengder data. 
+
+### **Sammenligning og konklusjon**
+Serverless-arkitektur innenfor overvåkning gir enkelhet og skalerbarhet, men på bekostning av fleksibilitet. Innebygde verktøy som CloudWatch gjør det raskt og enkelt å sette opp overvåkning, men utfordringer som fragmenterte logger og begrenset tilpasning kan redusere effektiviteten i komplekse systemer. 
 
 Mikrotjenestearkitektur, på den andre siden, gir større kontroll og tilpasningsmuligheter. Dette gjør det mulig å implementere overvåkning som er skreddersydd til prosjektets behov. Likevel kommer dette med økt kompleksitet og kostnad, siden teamet selv må vedlikeholde overvåkningsinfrastrukturen.
 
-Valget bør baseres på prosjektets størrelse og krav til overvåkning, samt teamets kapasitet til å vedlikeholde overvåkningsinfrastrukturen. 
-For Couch Explorers-prosjektet, hvor bildeskaping er sentralt, kan serverless være et godt valg på grunn av sin innebygde støtte for logging og skalerbarhet, men mer spesialiserte mikrotjenestebaserte løsninger kan vurderes for områder som brukeradministrasjon eller betalingssystemer.
-3. **`Skalerbarhet og kostnadskontroll:`**:
-Skalerbarhet og kostnadskontroll er avgjørende faktorer ved valg av arkitektur. Serverless og mikrotjenestearkitekturer har ulike egenskaper når det gjelder ressursutnyttelse, automatisering av skalering og økonomisk effektivitet.
-- **Serverless-arkitektur**
-Serverless-arkitekturer er designet for automatisk skalering, hvor ressurser tildeles dynamisk basert på faktisk belastning.
-- *Fordeler*:
-- Automatisk skalering: AWS Lambda og lignende tjenester skalerer automatisk opp og ned basert på trafikk. Dette gjør det mulig å håndtere plutselige økninger i bruk uten å konfigurere eller overvåke servere manuelt.
-- Skalerbarhet: Håndterer også automatisk tusenvis av samtidige forespørsler. Betyr at det er veldig skalerbart. 
-- Redusert kompleksitet/administrasjon: Ingen servervedlikehold, som igjen gjør at kostnad og ressurser blir lave dersom det skaleres høyt. 
-- Ingen kostnad ved inaktivitet: Funksjoner faktureres kun når de kjører (betaler kun for datakraften du bruker i millisekunder), noe som betyr at kostnadene skalerer med bruken.
-- Ressurser: Ressurser (CPU og minne) blir tildelt hver funksjon dynamisk, noe som eliminerer overprovisjonering.
-- *Ulemper*:
-- Cold Starts: Det kan forekomme forsinkelse ved første oppstart til en funksjon. Dette fører til økt responstid, som kan være kritisk i visse applikasjoner, da særlig hvis det er skalert stort.
-- Kjøretidsbegrensninger, ressursbegrensninger og stateless: Maks 15 min per kjøring, må bruke ekstern lagring, minne opptil 10gb og begrenset diskplass, kan ha komplikasjoner ved skalering og/eller ressurskrevende applikasjoner.
-- Kostnader ved kontinuerlig bruk: For arbeidsmengder med konstant høy trafikk, kan potensielet kostnadene for serverless overstige kostnadene ved å drifte egne servere eller containere, da betalingen skjer per datakraft som brukes.
-- **Mikrotjenestearkitektur**:
-Containerbaserte Mikrotjenestearkitekturer, gir organisasjonen full kontroll over ressursene og hvordan tjenestene skaleres.
-- *Fordeler*:
-- Portabilitet og konsistens: Som nevnt tidligere, docker kontainere kjører identisk på ulike miljøer, som kan være gunstig under skalering av et stort system.
-- Isolasjon: Da hver applikasjon og dens avhengigheter er isolert i egen container, forhindrer du konflikter i store systemer.
-- Skalerbarhet: Docker gjør det enkelt å distribuere og skalere applikasjoner ved å kjøre flere instanser av en container på tvers av ulike servere.
-- Standardisert orkistrering: Håndtering av applikasjoner er standardisert. 
-- Ressurser: Siden docker-containere deler kjerne med operativsystemet, kan en kjøre flere applikasjoner med lavt ressursbruk. Dette optimaliserer serverressurser. 
-- Kostnader: Ved jevn og høy arbeidsbelastning i store systemer kan drift av containere være billigere enn serverless, da det kan redusere kostnadene ved konstante hyppige forespørsler.
-- *Ulemper*:
-- Manuell skalering: For å håndtere "spikes" i trafikken må man ofte ha ekstra ressurser aktive in case det trengs. Dette fører til ressurser og kostnader som står ubrukt i perioder med enten lav eller ingen belastning.
-- Kompleksitet: Mikrotjenestearkitektur krever administrativt arbeid og manuelle skaleringsstrategier, noe som øker kompleksitet og vedlikeholdskostnader. 
-- Fast kostnad. Selv når containerbasert systemer ikke brukes må man ofte betale for drift av server 24/7, selv under inaktivitet. 
+Valget bør baseres på prosjektets størrelse og krav til overvåkning, samt teamets kapasitet til å vedlikeholde overvåkningsinfrastrukturen.
 
-**Sammenligning og konklusjon**
+### 3. **Skalerbarhet og kostnadskontroll**:
+Skalerbarhet og kostnadskontroll er avgjørende faktorer ved valg av arkitektur. Serverless og mikrotjenestearkitekturer har ulike egenskaper når det gjelder ressursutnyttelse, automatisering av skalering og økonomisk effektivitet.
+### **Serverless-arkitektur**
+Serverless-arkitekturer er designet for automatisk skalering, hvor ressurser tildeles dynamisk basert på faktisk belastning.
+#### *Fordeler*:
+- **Automatisk skalering**: AWS Lambda og lignende tjenester skalerer automatisk opp og ned basert på trafikk. Dette gjør det mulig å håndtere plutselige økninger i bruk uten å konfigurere eller overvåke servere manuelt.
+- **Skalerbarhet**: Håndterer også automatisk tusenvis av samtidige forespørsler. Betyr at det er veldig skalerbart. 
+- **Redusert kompleksitet/administrasjon**: Ingen servervedlikehold, som igjen gjør at kostnad og ressurser blir lave dersom det skaleres høyt. 
+- **Ingen kostnad ved inaktivitet**: Funksjoner faktureres kun når de kjører (betaler kun for datakraften du bruker i millisekunder), noe som betyr at kostnadene skalerer med bruken.
+- **Ressurser**: Ressurser (CPU og minne) blir tildelt hver funksjon dynamisk, noe som eliminerer overprovisjonering.
+
+#### *Ulemper*:
+- **Cold Starts**: Det kan forekomme forsinkelse ved første oppstart til en funksjon. Dette fører til økt responstid, som kan være kritisk i visse applikasjoner, da særlig hvis det er skalert stort.
+- **Kjøretidsbegrensninger, ressursbegrensninger og stateless**: Maks 15 min per kjøring, må bruke ekstern lagring, minne opptil 10gb og begrenset diskplass, kan ha komplikasjoner ved skalering og/eller ressurskrevende applikasjoner.
+- **Kostnader ved kontinuerlig bruk**: For arbeidsmengder med konstant høy trafikk, kan potensielet kostnadene for serverless overstige kostnadene ved å drifte egne servere eller containere, da betalingen skjer per datakraft som brukes.
+
+### **Mikrotjenestearkitektur**:
+Containerbaserte Mikrotjenestearkitekturer, gir organisasjonen full kontroll over ressursene og hvordan tjenestene skaleres.
+#### **Fordeler**:
+- **Portabilitet og konsistens**: Som nevnt tidligere, docker kontainere kjører identisk på ulike miljøer, som kan være gunstig under skalering av et stort system.
+- **Isolasjon**: Da hver applikasjon og dens avhengigheter er isolert i egen container, forhindrer du konflikter i store systemer.
+- **Skalerbarhet**: Docker gjør det enkelt å distribuere og skalere applikasjoner ved å kjøre flere instanser av en container på tvers av ulike servere.
+- **Standardisert orkistrering:** Håndtering av applikasjoner er standardisert. 
+- **Ressurser**: Siden docker-containere deler kjerne med operativsystemet, kan en kjøre flere applikasjoner med lavt ressursbruk. Dette optimaliserer serverressurser. 
+- **Kostnader**: Ved jevn og høy arbeidsbelastning i store systemer kan drift av containere være billigere enn serverless, da det kan redusere kostnadene ved konstante hyppige forespørsler.
+
+#### **Ulemper**:
+- **Manuell skalering**: For å håndtere "spikes" i trafikken må man ofte ha ekstra ressurser aktive in case det trengs. Dette fører til ressurser og kostnader som står ubrukt i perioder med enten lav eller ingen belastning.
+- **Kompleksitet**: Mikrotjenestearkitektur krever administrativt arbeid og manuelle skaleringsstrategier, noe som øker kompleksitet og vedlikeholdskostnader. 
+- **Fast kostnad**. Selv når containerbasert systemer ikke brukes må man ofte betale for drift av server 24/7, selv under inaktivitet. 
+
+### **Sammenligning og konklusjon**
 Serverless gir en enkel og automatisk skalering som er ideell for applikasjoner med uforutsigbar trafikk, som sporadiske batch-jobber eller brukergenererte forespørsler. 
 Serverless er svært kostnadseffektivt for applikasjoner med lav eller variabel trafikk, da man kun betaler for faktisk bruk.
 Serverless er ideelt for applikasjoner som ikke krever kontinuerlig drift eller brukerintensive ressurser.
@@ -220,42 +226,42 @@ Mikrotjenester gir derimot bedre kontroll over hvordan og når tjenester skalere
 For applikasjoner med jevn og høy trafikk kan mikrotjenester være billigere, siden faste ressurskostnader kan utnyttes bedre.
 Mikrotjenester gir fordelen av å optimalisere ressursbruken ved å tildele nøyaktig det som trengs for hver tjeneste.
 
-4. **`Eierskap og ansvar`**:
+### 4. **Eierskap og ansvar**:
 Eierskap og ansvar handler om hvordan teamet håndterer applikasjonens ytelse, pålitelighet og kostnader, og hvordan dette påvirkes av arkitekturvalget.
-- **Serverless-arkitektur**
+### **Serverless-arkitektur**
 I en serverless-arkitektur ligger mye av ansvaret for infrastruktur og vedlikehold hos skyleverandøren. Dette reduserer teamets eierskap til infrastrukturen, men gir fortsatt utviklerne ansvar for applikasjonens funksjonalitet.
-- *Ytelse*:
-- Skyleverandøren håndterer ressursallokering og automatisk skalering, noe som betyr at teamet ikke trenger å justere CPU eller minne manuelt.
-- Begrenset kontroll over infrastrukturen kan føre til utfordringer i optimalisering av ytelsen, særlig med kaldstart-latens som er et unikt problem i serverless-systemer.
-- Teamets ansvar: Optimalisere koden for rask respons og minimal kjøretid og monitorere ytelsen ved hjelp av leverandørens verktøy (f.eks. AWS CloudWatch) for å identifisere flaskehalser i funksjonene.
-- *Pålitilighet*:
-- Service Level Agreements (SLA-er) fra skyleverandøren sikrer høy oppetid, men teamet må fortsatt håndtere feil på applikasjonsnivå.
-- Forenklet vedlikehold: Ingen behov for å administrere servere eller overvåke infrastruktur. Dette eliminerer risikoen for feilkonfigurasjoner av servere.
-- Teamets ansvar: Designe robuste systemer som håndterer feil. Konfigurere retries og fallback-mekanismer for funksjoner og køer.
-- *Kostnader*:
-- Kostnader er knyttet til faktisk bruk (betal-per-forespørsel), noe som gjør dem dynamiske og potensielt uforutsigbare.
-- Ueffektiv koding eller bruk av funksjoner, som for mange kaldstarter, kjøretid, eller overflødige kall, kan føre til unødvendige utgifter.
-- Teamets ansvar: Analysere og optimalisere funksjoners kjøretid. Unngå unødvendige kall og overprovisjonering av ressurser.
+#### *Ytelse*:
+Skyleverandøren håndterer ressursallokering og automatisk skalering, noe som betyr at teamet ikke trenger å justere CPU eller minne manuelt.
+Begrenset kontroll over infrastrukturen kan føre til utfordringer i optimalisering av ytelsen, særlig med kaldstart-latens som er et unikt problem i serverless-systemer.
+Teamets ansvar: Optimalisere koden for rask respons og minimal kjøretid og monitorere ytelsen ved hjelp av leverandørens verktøy (f.eks. AWS CloudWatch) for å identifisere flaskehalser i funksjonene.
+#### *Pålitilighet*:
+Service Level Agreements (SLA-er) fra skyleverandøren sikrer høy oppetid, men teamet må fortsatt håndtere feil på applikasjonsnivå.
+Forenklet vedlikehold: Ingen behov for å administrere servere eller overvåke infrastruktur. Dette eliminerer risikoen for feilkonfigurasjoner av servere.
+Teamets ansvar: Designe robuste systemer som håndterer feil. Konfigurere retries og fallback-mekanismer for funksjoner og køer.
+#### *Kostnader*:
+Kostnader er knyttet til faktisk bruk (betal-per-forespørsel), noe som gjør dem dynamiske og potensielt uforutsigbare.
+Ueffektiv koding eller bruk av funksjoner, som for mange kaldstarter, kjøretid, eller overflødige kall, kan føre til unødvendige utgifter.
+Teamets ansvar: Analysere og optimalisere funksjoners kjøretid. Unngå unødvendige kall og overprovisjonering av ressurser.
 
-- **Mikrotjenestearkitektur**:
+### **Mikrotjenestearkitektur**
 I en mikrotjeneste-arkitektur ligger full kontroll over infrastrukturen og applikasjonens drift hos teamet. Dette gir større eierskap, men krever også mer ressurser og oppfølging.
-- *Ytelse*:
-- Teamet kan konfigurere tjenester for å oppnå spesifikke ytelsesmål, inkludert skalering og ressursbruk, uten å være begrenset av leverandørens standarder.
-- Feil eller ineffektiv ressursbruk kan føre til dårlig ytelse og nedetid.
-- Teamets ansvar: Administrere servere eller containere for å sikre at ressursene er riktig konfigurert og tilstrekkelige for å møte trafikkbehov. Overvåke og justere skalering for å oppnå optimal ytelse.
-- *Pålitilighet*:
-- Pålitelighet er helt avhengig av teamets design og implementering av redundans, vedlikehold og overvåkning.
-- Mer "Head in the Game".
-- Pålitiligheten avhenger av hvordan organisasjonen har utviklet systemet, og om det fungerer slik det skal. 
-- Isolasjon: Feil i én tjeneste påvirker vanligvis ikke andre tjenester, gitt god design. Dette gir teamet bedre kontroll over applikasjonens pålitelighet.
-- Teamets ansvar: Sørge for at tjenester er isolerte og designet for å håndtere feil uten å forårsake systemfeil. Implementere overvåkning og alarmer for tidlig oppdagelse av problemer.
-- *Kostnader*:
-- Kostnader er ofte faste, basert på driften av servere og containere, noe som gir bedre forutsigbarhet, men høyere grunnkostnader.
-- Overprovisjonering eller ineffektiv ressursbruk kan føre til sløsing.
-- Feil i infrastruktur eller konfigurasjon kan føre til nedetid og økonomiske tap. Dette kan også kreve økt bemanning for å håndtere feilretting.
-- Teamets ansvar: Planlegge og allokere ressurser basert på forventet bruk. Optimalisere tjenestene for å redusere behovet for overprovisjonering.
+#### *Ytelse*:
+Teamet kan konfigurere tjenester for å oppnå spesifikke ytelsesmål, inkludert skalering og ressursbruk, uten å være begrenset av leverandørens standarder.
+Feil eller ineffektiv ressursbruk kan føre til dårlig ytelse og nedetid.
+Teamets ansvar: Administrere servere eller containere for å sikre at ressursene er riktig konfigurert og tilstrekkelige for å møte trafikkbehov. Overvåke og justere skalering for å oppnå optimal ytelse.
+#### *Pålitilighet*:
+Pålitelighet er helt avhengig av teamets design og implementering av redundans, vedlikehold og overvåkning.
+Mer "Head in the Game".
+Pålitiligheten avhenger av hvordan organisasjonen har utviklet systemet, og om det fungerer slik det skal. 
+Isolasjon: Feil i én tjeneste påvirker vanligvis ikke andre tjenester, gitt god design. Dette gir teamet bedre kontroll over applikasjonens pålitelighet.
+Teamets ansvar: Sørge for at tjenester er isolerte og designet for å håndtere feil uten å forårsake systemfeil. Implementere overvåkning og alarmer for tidlig oppdagelse av problemer.
+#### *Kostnader*:
+Kostnader er ofte faste, basert på driften av servere og containere, noe som gir bedre forutsigbarhet, men høyere grunnkostnader.
+Overprovisjonering eller ineffektiv ressursbruk kan føre til sløsing.
+Feil i infrastruktur eller konfigurasjon kan føre til nedetid og økonomiske tap. Dette kan også kreve økt bemanning for å håndtere feilretting.
+Teamets ansvar: Planlegge og allokere ressurser basert på forventet bruk. Optimalisere tjenestene for å redusere behovet for overprovisjonering.
 
-**Sammenligning og konklusjon**
+### **Sammenligning og konklusjon**
 Serverless reduserer teamets eierskap til infrastruktur og ytelse, men beholder ansvaret for kostnadskontroll og optimalisering av funksjoner. 
 Dette kan være utfordrende i systemer med høye krav til ytelse og forutsigbare kostnader.
 Mikrotjenester gir større eierskap over hele systemet, men medfører mer ansvar for vedlikehold, ytelse, kostnader og feilhåndtering. Dette krever dedikerte ressurser og større teamkapasitet.
