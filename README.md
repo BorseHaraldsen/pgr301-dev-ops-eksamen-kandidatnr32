@@ -118,7 +118,7 @@ Denne workflowen bruker en to-trinns taggestrategi for fleksibilitet og sporbarh
 Implementasjonen av et system basert på serverless arkitektur med FaaS-tjenester som f.eks. AWS lambda og Amazon SQS, sammenlignet med en mikrotjenestearkitektur med container-teknologi har store virkninger på utfallet til systemet.
 De to tilnærmingene påvirker flere sentrale DevOps-prinsipper på forskjellige måter, men jeg skal drøfte implikasjonene i lys av disse spesifikke prinsippene: CI/CD (Kontinuerlig Integrasjon / Kontinuerlig leveranse), Overvåkning, Skalerbarhet og Kostnadskontroll og Eierskap og Ansvar.
 
-## **1.** **Automatisering og kontinuerlig levering (CI/CD)**:
+## **5.1.** **Automatisering og kontinuerlig levering (CI/CD)**:
 Automatisering og kontinuerlig levering er en sentral del av DevOps praksis. Serverless og mikrotjenestearkitektur påvirker hvordan automatisering og CI/CD-pipelines utformes og operer.
 
 ### **Serverless-arkitektur** 
@@ -158,7 +158,7 @@ Mikrotjenester derimot, utmerker seg i storskala systemer som krever avansert ko
 Valget mellom de to bør baseres på prosjektets størrelse, teamets behov og ønsket balanse mellom modularitet, kompleksitet og kontroll.
 Uansett valg, må DevOps-prinsipper for automatisering og CI/CD tilpasses for å møte utfordringene i den valgte arkitekturen.
 
-## **2.** **Observability (overvåkning)**:
+## **5.2.** **Observability (overvåkning)**:
 Overvåkning er en viktig del av DevOps-praksis, da det gir innsikt i systemets helse, ytelse og feilhåndtering. Forskjellen mellom container-basert mikrotjenestearkitektur og serverless-arkitektur har betydelige implikasjoner for hvordan observability håndteres.
 ### **Serverless-arkitektur**
 Serverless-arkitektur er sterkt avhengig av skyleverandørens innebygde verktøy for overvåkning og logging.
@@ -189,7 +189,7 @@ Mikrotjenestearkitektur, på den andre siden, gir større kontroll og tilpasning
 
 Valget bør baseres på prosjektets størrelse og krav til overvåkning, samt teamets kapasitet til å vedlikeholde overvåkningsinfrastrukturen.
 
-## **3.** **Skalerbarhet og kostnadskontroll**:
+## **5.3.** **Skalerbarhet og kostnadskontroll**:
 Skalerbarhet og kostnadskontroll er avgjørende faktorer ved valg av arkitektur. Serverless og mikrotjenestearkitekturer har ulike egenskaper når det gjelder ressursutnyttelse, automatisering av skalering og økonomisk effektivitet.
 ### **Serverless-arkitektur**
 Serverless-arkitekturer er designet for automatisk skalering, hvor ressurser tildeles dynamisk basert på faktisk belastning.
@@ -229,7 +229,7 @@ Mikrotjenester gir derimot bedre kontroll over hvordan og når tjenester skalere
 For applikasjoner med jevn og høy trafikk kan mikrotjenester være billigere, siden faste ressurskostnader kan utnyttes bedre.
 Mikrotjenester gir fordelen av å optimalisere ressursbruken ved å tildele nøyaktig det som trengs for hver tjeneste.
 
-## **4.** **Eierskap og ansvar**:
+## **5.4.** **Eierskap og ansvar**:
 Eierskap og ansvar handler om hvordan teamet håndterer applikasjonens ytelse, pålitelighet og kostnader, og hvordan dette påvirkes av arkitekturvalget.
 ### **Serverless-arkitektur**
 I en serverless-arkitektur ligger mye av ansvaret for infrastruktur og vedlikehold hos skyleverandøren. Dette reduserer teamets eierskap til infrastrukturen, men gir fortsatt utviklerne ansvar for applikasjonens funksjonalitet.
@@ -278,7 +278,7 @@ Dersom dette var noe du ønsket, så ville jeg implementert dem som følger:
 
 **1. Krav om godkjenning av pull requests.**
 - Aktivere en regel som gjør at en godkjenning på pull requests er nødvendig før det merges til main.
-- 
+
 **2. Status check pass før merging.**
 - Dette kravet fører til at ingen kode som ikke kompilerer eller fungerer pushes til main.
 
