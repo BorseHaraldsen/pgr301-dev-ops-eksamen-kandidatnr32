@@ -40,7 +40,7 @@
 - Relevant kode ligger i mappen infra. (med bruk av lambda_sqs.py)
 - AWS provider versjonen er satt til OVER 1.9.0 og ikke inkluderende, slik som sagt i oppgaven.
 - Bilder lagres i `s3://pgr301-couch-explorers/32/task2_generated_images`.
-- Eksempel test: aws sqs send-message --queue-url https://sqs.eu-west-1.amazonaws.com/244530008913/terraform-sqs-queue-32 --message-body "Beautiful house on top of an ocean wave"
+- Eksempel test: `aws sqs send-message --queue-url https://sqs.eu-west-1.amazonaws.com/244530008913/terraform-sqs-queue-32 --message-body "Beautiful house on top of an ocean wave"`
 
 ### B. GitHub Actions Workflow for Terraform
 **Beskrivelse**: Workflow for å deploye infrastrukturen med Terraform, med forskjellig oppførsel avhengig av hvilken branch som oppdateres:
@@ -59,20 +59,20 @@ Andre branches: Kjør `terraform plan` for gjennomgang av endringer.
 ## Oppgave 3: Javaklient og Docker
 
 ### A. Dockerfile for Java-klient
-- **Beskrivelse**: En Dockerfile er skrevet for å bygge og kjøre Java-klienten, som sender meldinger til SQS-køen. Dockerfile bruker en multi-stage tilnærming for å redusere bildestørrelse.
-- 
-- **Viktig**:
-  - Relevant kode ligger i mappen java_sqs_client
-  - Bilder som produseres via SQS-køen lagres i `s3://pgr301-couch-explorers/32/task2_generated_images`.
+**Beskrivelse**: En Dockerfile er skrevet for å bygge og kjøre Java-klienten, som sender meldinger til SQS-køen. Dockerfile bruker en multi-stage tilnærming for å redusere bildestørrelse.
+
+**Viktig**:
+- Relevant kode ligger i mappen java_sqs_client
+- Bilder som produseres via SQS-køen lagres i `s3://pgr301-couch-explorers/32/task2_generated_images`.
 
 ### B. GitHub Actions Workflow for publisering til Docker Hub
-- **Beskrivelse**: Workflow som automatisk bygger og publiserer Docker-image til Docker Hub ved hver push til `main`-branchen.
+**Beskrivelse**: Workflow som automatisk bygger og publiserer Docker-image til Docker Hub ved hver push til `main`-branchen.
 
-#### **Container Image + SQS URL**
+#### **Container Image + SQS URL**:
 - **Image-Navn**: `borseharaldsen/sqs_client_32`
 - **SQS URL**: `https://sqs.eu-west-1.amazonaws.com/244530008913/terraform-sqs-queue-32`
 
-#### **Taggestrategi**
+### **Taggestrategi**
 Denne workflowen bruker en to-trinns taggestrategi for fleksibilitet og sporbarhet:
 1. **`latest` tag**:
    - Docker-imaget tagges alltid med `latest` for å representere den nyeste og mest stabile versjonen.
@@ -88,18 +88,18 @@ Denne workflowen bruker en to-trinns taggestrategi for fleksibilitet og sporbarh
    - `latest` gir enkel tilgang til den nyeste versjonen for testing og bruk.
    - Dynamiske tagger sikrer sporbarhet, slik at spesifikke versjoner kan brukes for debugging eller historisk referanse.
 
-- **Viktig**:
-  - Relevant kode ligger i .github/workflows/docker_publish_32.yml
+**Viktig**:
+- Relevant kode ligger i .github/workflows/docker_publish_32.yml
 
 ---
 
 ## Oppgave 4: Metrics og overvåkning
 
 ### CloudWatch Alarm
-- **Beskrivelse**: En CloudWatch-alarm er konfigurert for å overvåke SQS-metrikken `ApproximateAgeOfOldestMessage`. Alarmen sender e-postvarsler når verdien overstiger en definert terskel (30 sekunder).
+**Beskrivelse**: En CloudWatch-alarm er konfigurert for å overvåke SQS-metrikken `ApproximateAgeOfOldestMessage`. Alarmen sender e-postvarsler når verdien overstiger en definert terskel (30 sekunder).
 
-#### **Implementasjon**:
-- **Navn på CloudWatch Alarm**:32-sqs-ApproximateAgeOfOldestMessage-alarm
+### **Implementasjon**:
+- **Navn på CloudWatch Alarm**: `32-sqs-ApproximateAgeOfOldestMessage-alarm`
 - Terraform-koden fra oppgave 2 er utvidet med alarmoppsett.
 - Alarmen er koblet til en SNS-topic som sender e-post til en adresse spesifisert i Terraform-variabelen `alarm_email`.
 - **Terskelen**: Alarmen trigges dersom den eldste meldingen i køen er eldre enn **30 sekunder**.
@@ -108,18 +108,19 @@ Denne workflowen bruker en to-trinns taggestrategi for fleksibilitet og sporbarh
 - **Testing**:
   - Kan enkelt testes ved å deaktivere "Event Source Mapping" på Lambda-funksjonen, sende meldinger til SQS-køen, og observere at alarmen trigges. Eller ved å f.eks. ta treshold ned. 
 
-  - **Viktig**:
-  - Relevant kode ligger i mappen infra.
+**Viktig**:
+- Relevant kode ligger i mappen infra.
 
 ## Oppgave 5: Serverless, Function-as-a-Service (FaaS) vs Container-teknologi
 
-### **Kort introduksjon**:
+## **Kort introduksjon**:
 
 Implementasjonen av et system basert på serverless arkitektur med FaaS-tjenester som f.eks. AWS lambda og Amazon SQS, sammenlignet med en mikrotjenestearkitektur med container-teknologi har store virkninger på utfallet til systemet.
 De to tilnærmingene påvirker flere sentrale DevOps-prinsipper på forskjellige måter, men jeg skal drøfte implikasjonene i lys av disse spesifikke prinsippene: CI/CD (Kontinuerlig Integrasjon / Kontinuerlig leveranse), Overvåkning, Skalerbarhet og Kostnadskontroll, Eierskap og Ansvar.
 
-### 1. **Automatisering og kontinuerlig levering (CI/CD)**:
+## **1.** **Automatisering og kontinuerlig levering (CI/CD)**:
 Automatisering og kontinuerlig levering er en sentral del av DevOps praksis. Serverless og mikrotjenestearkitektur påvirker hvordan automatisering og CI/CD-pipelines utformes og operer.
+
 ### **Serverless-arkitektur** 
 Serverless-arkitektur fremhever modularitet. Hver funksjon kan distribueres individuelt, noe som gir organisasjonen muligheten til å iterere raskt på spesifikke deler av applikasjonen uten å måtte distribuere hele systemet. Dette passer særlig godt i miljøer med hyppige endringer og/eller i små teams. 
 Slike oppdateringer kan distribueres gjennom en enkel CI/CD-pipeline.
@@ -149,7 +150,7 @@ Mikrotjenestearkitekturen bryter applikasjoner ned i mindre, selvstendige tjenes
 - **Administrivt arbeid**: Man må administrere infrastruktur, slik som f.eks. sikkerhet og andre ting, noe som kan ha påvirkning på automatisering og CI/CD. 
 - **Iterasjonshastighet**: Mer omfattende oppsett og arbeid, generelt tregere iterasjoner. 
 
-### **Sammenligning og konklusjon**
+### **Sammenligning**
 
 Begge arkitekturer har unike styrker og svakheter når det gjelder automatisering og CI/CD.
 Serverless kan være spesielt egnet for hendelsesdrevne, kostnadssensitive applikasjoner med uforutsigbare arbeidsmengder, som for eksempel IoT- eller mobilapplikasjonsbackends. Eller i vårt tilfelle image generating.
@@ -157,7 +158,7 @@ Mikrotjenester derimot, utmerker seg i storskala systemer som krever avansert ko
 Valget mellom de to bør baseres på prosjektets størrelse, teamets behov og ønsket balanse mellom modularitet, kompleksitet og kontroll.
 Uansett valg, må DevOps-prinsipper for automatisering og CI/CD tilpasses for å møte utfordringene i den valgte arkitekturen.
 
-### 2. **Observability (overvåkning)**:
+## **2.** **Observability (overvåkning)**:
 Overvåkning er en viktig del av DevOps-praksis, da det gir innsikt i systemets helse, ytelse og feilhåndtering. Forskjellen mellom container-basert mikrotjenestearkitektur og serverless-arkitektur har betydelige implikasjoner for hvordan observability håndteres.
 ### **Serverless-arkitektur**
 Serverless-arkitektur er sterkt avhengig av skyleverandørens innebygde verktøy for overvåkning og logging.
@@ -181,14 +182,14 @@ Serverless-arkitektur er sterkt avhengig av skyleverandørens innebygde verktøy
 - **Kompleksitet**: Oppsett av logging, og overvåking, er veldig mye mer krevende enn å bruke innebygde overvåkningsverktøy. Oppsettet krever mye tid og ressurser, særlig hvis tjeneste skalerer. 
 - **Støy**: Hvis oppsettet ikke er optimalt, kan det være vanskelig å finne relevante logger eller metrics i store mengder data. 
 
-### **Sammenligning og konklusjon**
+### **Sammenligning**
 Serverless-arkitektur innenfor overvåkning gir enkelhet og skalerbarhet, men på bekostning av fleksibilitet. Innebygde verktøy som CloudWatch gjør det raskt og enkelt å sette opp overvåkning, men utfordringer som fragmenterte logger og begrenset tilpasning kan redusere effektiviteten i komplekse systemer. 
 
 Mikrotjenestearkitektur, på den andre siden, gir større kontroll og tilpasningsmuligheter. Dette gjør det mulig å implementere overvåkning som er skreddersydd til prosjektets behov. Likevel kommer dette med økt kompleksitet og kostnad, siden teamet selv må vedlikeholde overvåkningsinfrastrukturen.
 
 Valget bør baseres på prosjektets størrelse og krav til overvåkning, samt teamets kapasitet til å vedlikeholde overvåkningsinfrastrukturen.
 
-### 3. **Skalerbarhet og kostnadskontroll**:
+## **3.** **Skalerbarhet og kostnadskontroll**:
 Skalerbarhet og kostnadskontroll er avgjørende faktorer ved valg av arkitektur. Serverless og mikrotjenestearkitekturer har ulike egenskaper når det gjelder ressursutnyttelse, automatisering av skalering og økonomisk effektivitet.
 ### **Serverless-arkitektur**
 Serverless-arkitekturer er designet for automatisk skalering, hvor ressurser tildeles dynamisk basert på faktisk belastning.
@@ -219,7 +220,7 @@ Containerbaserte Mikrotjenestearkitekturer, gir organisasjonen full kontroll ove
 - **Kompleksitet**: Mikrotjenestearkitektur krever administrativt arbeid og manuelle skaleringsstrategier, noe som øker kompleksitet og vedlikeholdskostnader. 
 - **Fast kostnad**. Selv når containerbasert systemer ikke brukes må man ofte betale for drift av server 24/7, selv under inaktivitet. 
 
-### **Sammenligning og konklusjon**
+### **Sammenligning**
 Serverless gir en enkel og automatisk skalering som er ideell for applikasjoner med uforutsigbar trafikk, som sporadiske batch-jobber eller brukergenererte forespørsler. 
 Serverless er svært kostnadseffektivt for applikasjoner med lav eller variabel trafikk, da man kun betaler for faktisk bruk.
 Serverless er ideelt for applikasjoner som ikke krever kontinuerlig drift eller brukerintensive ressurser.
@@ -228,7 +229,7 @@ Mikrotjenester gir derimot bedre kontroll over hvordan og når tjenester skalere
 For applikasjoner med jevn og høy trafikk kan mikrotjenester være billigere, siden faste ressurskostnader kan utnyttes bedre.
 Mikrotjenester gir fordelen av å optimalisere ressursbruken ved å tildele nøyaktig det som trengs for hver tjeneste.
 
-### 4. **Eierskap og ansvar**:
+## **4.** **Eierskap og ansvar**:
 Eierskap og ansvar handler om hvordan teamet håndterer applikasjonens ytelse, pålitelighet og kostnader, og hvordan dette påvirkes av arkitekturvalget.
 ### **Serverless-arkitektur**
 I en serverless-arkitektur ligger mye av ansvaret for infrastruktur og vedlikehold hos skyleverandøren. Dette reduserer teamets eierskap til infrastrukturen, men gir fortsatt utviklerne ansvar for applikasjonens funksjonalitet.
@@ -263,7 +264,7 @@ Overprovisjonering eller ineffektiv ressursbruk kan føre til sløsing.
 Feil i infrastruktur eller konfigurasjon kan føre til nedetid og økonomiske tap. Dette kan også kreve økt bemanning for å håndtere feilretting.
 Teamets ansvar: Planlegge og allokere ressurser basert på forventet bruk. Optimalisere tjenestene for å redusere behovet for overprovisjonering.
 
-### **Sammenligning og konklusjon**
+### **Sammenligning**
 Serverless reduserer teamets eierskap til infrastruktur og ytelse, men beholder ansvaret for kostnadskontroll og optimalisering av funksjoner. 
 Dette kan være utfordrende i systemer med høye krav til ytelse og forutsigbare kostnader.
 Mikrotjenester gir større eierskap over hele systemet, men medfører mer ansvar for vedlikehold, ytelse, kostnader og feilhåndtering. Dette krever dedikerte ressurser og større teamkapasitet.
