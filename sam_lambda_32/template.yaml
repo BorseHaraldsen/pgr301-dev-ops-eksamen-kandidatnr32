@@ -63,7 +63,7 @@ Resources:
             Statement:
               - Effect: Allow
                 Action: 'bedrock:InvokeModel'
-                Resource: 'arn:aws:bedrock:us-east-1::model/amazon.titan-image-generator-v1'
+                Resource: 'arn:aws:bedrock:us-east-1::foundation-model/amazon.titan-image-generator-v1'
               
 Outputs:
   GenerateImageApi:
