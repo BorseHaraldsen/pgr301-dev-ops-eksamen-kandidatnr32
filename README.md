@@ -16,8 +16,8 @@
 
 ### B. GitHub Actions Workflow for SAM-deploy
 **Beskrivelse**: Automatisert workflow som deployer SAM-applikasjonen hver gang det pushes til `main`-branchen.
-- **Lenke til kjørt Github Actions Workflow**: 
-- [GitHub Actions Workflow](https://github.com/BorseHaraldsen/pgr301-dev-ops-eksamen-kandidatnr32/actions/runs/11992557403)
+- **Lenke til kjørt Github Actions Workflow som har deployet SAM-applikasjonen til AWS**: 
+- [GitHub Actions Workflow](https://github.com/BorseHaraldsen/pgr301-dev-ops-eksamen-kandidatnr32/actions/runs/12021020113)
 
 **Viktig**:
 - Relevant kode ligger i .github/workflows/deploy_lambda_32.yml
@@ -292,7 +292,7 @@ Tusen takk for gjennomgang av min besvarelse.
 | *Oppgave*   | *Leveranse*                                              |
 |-----------|--------------------------------------------------------|
 | **Oppgave 1** | API Gateway URL: `https://dok2ppwzob.execute-api.eu-west-1.amazonaws.com/Prod/generate-image` |
-|           | [GitHub Actions Workflow (SAM Deploy)](https://github.com/BorseHaraldsen/pgr301-dev-ops-eksamen-kandidatnr32/actions/runs/11992557403) |
+|           | [GitHub Actions Workflow (SAM Deploy)](https://github.com/BorseHaraldsen/pgr301-dev-ops-eksamen-kandidatnr32/actions/runs/12021020113) |
 | **Oppgave 2** | SQS URL: `https://sqs.eu-west-1.amazonaws.com/244530008913/terraform-sqs-queue-32` |
 |           | [Terraform Apply Workflow](https://github.com/BorseHaraldsen/pgr301-dev-ops-eksamen-kandidatnr32/actions/runs/11992557400) |
 |           | [Terraform Plan Workflow](https://github.com/BorseHaraldsen/pgr301-dev-ops-eksamen-kandidatnr32/actions/runs/11992157664) |
