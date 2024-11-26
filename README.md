@@ -49,7 +49,7 @@ Andre branches: Kjør `terraform plan` for gjennomgang av endringer.
 
 - **Lenker til kjørte Github Actions Workflows**:
   - [Terraform Apply Workflow (main)](https://github.com/BorseHaraldsen/pgr301-dev-ops-eksamen-kandidatnr32/actions/runs/11992557400)
-  - [Terraform Plan Workflow (task2_branch_32)](https://github.com/BorseHaraldsen/pgr301-dev-ops-eksamen-kandidatnr32/actions/runs/11992157664)
+  - [Terraform Plan Workflow (task2_nonmain_32)](https://github.com/BorseHaraldsen/pgr301-dev-ops-eksamen-kandidatnr32/actions/runs/12021808396)
 
 **Viktig**:
 - Relevant kode ligger i .github/workflows/deploy_terraform_32.yml
@@ -295,7 +295,7 @@ Tusen takk for gjennomgang av min besvarelse.
 |           | [GitHub Actions Workflow (SAM Deploy)](https://github.com/BorseHaraldsen/pgr301-dev-ops-eksamen-kandidatnr32/actions/runs/12021020113) |
 | **Oppgave 2** | SQS URL: `https://sqs.eu-west-1.amazonaws.com/244530008913/terraform-sqs-queue-32` |
 |           | [Terraform Apply Workflow](https://github.com/BorseHaraldsen/pgr301-dev-ops-eksamen-kandidatnr32/actions/runs/11992557400) |
-|           | [Terraform Plan Workflow](https://github.com/BorseHaraldsen/pgr301-dev-ops-eksamen-kandidatnr32/actions/runs/11992157664) |
+|           | [Terraform Plan Workflow](https://github.com/BorseHaraldsen/pgr301-dev-ops-eksamen-kandidatnr32/actions/runs/12021808396) |
 | **Oppgave 3** | Container Image: `borseharaldsen/sqs_client_32`         |
 |               | SQS URL: `https://sqs.eu-west-1.amazonaws.com/244530008913/terraform-sqs-queue-32` |
 | **Oppgave 4** | CloudWatch alarm konfigurert i `infra`.                |
